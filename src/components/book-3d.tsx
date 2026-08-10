@@ -1,13 +1,30 @@
 "use client";
 
 import * as React from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 import { BookOpen, Leaf, Sparkles } from "lucide-react";
 
 const PAGE_COUNT = 7;
+const MOBILE_BREAKPOINT = "(max-width: 1023px)";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const media = window.matchMedia(MOBILE_BREAKPOINT);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync of the initial media query result
+    setIsMobile(media.matches);
+    const listener = (event: MediaQueryListEvent) => setIsMobile(event.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
+  return isMobile;
+}
 
 export function Book3D() {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -16,7 +33,21 @@ export function Book3D() {
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-16, 16]), springConfig);
   const translateX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.9", "end 0.1"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (!isMobile) return;
+    // Sweeps the book from one tilt to the other as it travels through the viewport,
+    // reusing the same mouse-driven rotation pipeline instead of duplicating it.
+    mouseX.set(progress - 0.5);
+    mouseY.set((progress - 0.5) * 0.6);
+  });
+
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    if (isMobile) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     const x = (event.clientX - rect.left) / rect.width - 0.5;
@@ -26,6 +57,7 @@ export function Book3D() {
   }
 
   function handleMouseLeave() {
+    if (isMobile) return;
     mouseX.set(0);
     mouseY.set(0);
   }

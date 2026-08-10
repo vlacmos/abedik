@@ -1,12 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, MessageSquareText, Phone, Send } from "lucide-react";
+import { Mail, MessageSquareText, Navigation, Phone, Send } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/context";
 import { useContact } from "@/lib/contact-context";
+
+const DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=Jana+Gutenberga+5,62-023+%C5%BBerniki,Poland";
 
 export function ContactSection() {
   const { t } = useLocale();
@@ -52,6 +55,16 @@ export function ContactSection() {
                 </a>
               </div>
             </div>
+
+            <a
+              href={DIRECTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-white/15 sm:w-auto sm:px-8"
+            >
+              <Navigation className="size-5" />
+              {t.contact.directionsLabel}
+            </a>
           </div>
         </motion.div>
       </div>

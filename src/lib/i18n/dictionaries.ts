@@ -124,6 +124,7 @@ export interface Dictionary {
     directPhoneLabel: string;
     directEmailLabel: string;
     closeLabel: string;
+    directionsLabel: string;
   };
   footer: {
     tagline: string;
@@ -349,6 +350,7 @@ export const pl: Dictionary = {
     directPhoneLabel: "Zadzwoń do nas",
     directEmailLabel: "Napisz e-mail",
     closeLabel: "Zamknij",
+    directionsLabel: "Jak dojechać?",
   },
   footer: {
     tagline: "Drukarnia książkowa z 30-letnim doświadczeniem i eksportem na cały świat.",
@@ -580,6 +582,7 @@ export const en: Dictionary = {
     directPhoneLabel: "Call us",
     directEmailLabel: "Email us",
     closeLabel: "Close",
+    directionsLabel: "Get Directions",
   },
   footer: {
     tagline: "A book manufacturing plant with 30 years of experience, exporting worldwide.",
@@ -811,6 +814,7 @@ export const de: Dictionary = {
     directPhoneLabel: "Rufen Sie uns an",
     directEmailLabel: "Schreiben Sie uns",
     closeLabel: "Schließen",
+    directionsLabel: "Route berechnen",
   },
   footer: {
     tagline: "Eine Buchdruckerei mit 30 Jahren Erfahrung und weltweitem Export.",
