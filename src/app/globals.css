@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+
+  --surface: #ffffff;
+  --surface-muted: #f8f9fb;
+  --border-subtle: #e7e9ee;
+
+  --brand-yellow: #f5b400;
+  --brand-yellow-soft: #fff3d6;
+  --brand-yellow-foreground: #1a1400;
+
+  --brand-emerald: #0f9d63;
+  --brand-emerald-soft: #e3f7ec;
+
+  --muted-foreground: #5b6472;
+
+  --radius: 1rem;
+}
+
+.dark {
+  --background: #0a0d14;
+  --foreground: #f1f4f8;
+
+  --surface: #10141d;
+  --surface-muted: #151a24;
+  --border-subtle: #232937;
+
+  --brand-yellow: #f5c024;
+  --brand-yellow-soft: #2b230a;
+  --brand-yellow-foreground: #0f0c00;
+
+  --brand-emerald: #22c586;
+  --brand-emerald-soft: #0f2a20;
+
+  --muted-foreground: #93a0b3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-yellow-soft: var(--brand-yellow-soft);
+  --color-brand-yellow-foreground: var(--brand-yellow-foreground);
+
+  --color-brand-emerald: var(--brand-emerald);
+  --color-brand-emerald-soft: var(--brand-emerald-soft);
+
+  --color-muted-foreground: var(--muted-foreground);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+
+  --radius: 1rem;
+}
+
+* {
+  border-color: var(--border-subtle);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
